@@ -27,7 +27,7 @@ jobs:
           update: true
 
     - name: Install dependencies
-      run: pacman -Sq --noconfirm git make mingw-w64-i686-{cmake,mesa,SDL2,qt5-static,libslirp,libarchive,libepoxy,toolchain}
+      run: pacman -Sq --noconfirm git make cmake mingw-w64-i686-{mesa,SDL2,qt5-static,libslirp,libarchive,libepoxy,toolchain}
   
     - name: Create build environment
       working-directory: ${{runner.workspace}}
@@ -36,6 +36,9 @@ jobs:
     - name: Configure
       working-directory: ${{runner.workspace}}/build
       run: cmake $GITHUB_WORKSPACE -G 'MSYS Makefiles' -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBUILD_STATIC=ON -DPORTABLE=ON -DQT5_STATIC_DIR=C:/tools/msys64/mingw64/qt5-static
+      env:
+        CXXFLAGS: -m32
+        LDFLAGS: -m32
 
     - name: Make
       working-directory: ${{runner.workspace}}/build
