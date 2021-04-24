@@ -52,7 +52,7 @@ void Init_Audio(int outputfreq)
 
 int AudioOut_GetNumSamples(int outlen)
 {
-    float f_len_in = (outlen * 32823.6328125) / (float)AudioOut_Freq;
+    float f_len_in = (outlen * 32823.6328125 * 2.0) / (float)AudioOut_Freq;
     f_len_in += AudioOut_SampleFrac;
     int len_in = (int)floor(f_len_in);
     AudioOut_SampleFrac = f_len_in - len_in;

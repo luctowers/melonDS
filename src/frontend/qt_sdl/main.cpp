@@ -112,7 +112,7 @@ void audioCallback(void* data, Uint8* stream, int len)
     // resample incoming audio to match the output sample rate
 
     int len_in = Frontend::AudioOut_GetNumSamples(len);
-    s16 buf_in[1024*2];
+    s16 buf_in[1024*2*2];
     int num_in;
 
     SDL_LockMutex(audioSyncLock);
@@ -527,7 +527,7 @@ void EmuThread::run()
                 SDL_UnlockMutex(audioSyncLock);
             }
 
-            double frametimeStep = nlines / (60.0 * 263.0);
+            double frametimeStep = nlines / (60.0 * 263.0) / 2.0;
 
             {
                 bool limitfps = Config::LimitFPS && !fastforward;
@@ -565,7 +565,7 @@ void EmuThread::run()
 
                 float fpstarget = 1.0/frametimeStep;
 
-                sprintf(melontitle, "[%d/%.0f] melonDS " MELONDS_VERSION, fps, fpstarget);
+                // sprintf(melontitle, "[%d/%.0f] melonDS " MELONDS_VERSION, fps, fpstarget);
                 changeWindowTitle(melontitle);
             }
         }
@@ -580,11 +580,13 @@ void EmuThread::run()
 
             EmuStatus = EmuRunning;
 
-            sprintf(melontitle, "melonDS " MELONDS_VERSION);
+            // sprintf(melontitle, "melonDS " MELONDS_VERSION);
             changeWindowTitle(melontitle);
 
             SDL_Delay(75);
         }
+
+        sprintf(melontitle, "melonDS Luc Luc Edition v1");
     }
 
     EmuStatus = 0;
